@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Juego Memory educativo en Lengua de Señas Colombiana (LSC) para niños de 4 a 6 años."
+    />
+    <meta name="theme-color" content="#2d6cdf" />
+    <link rel="manifest" href="manifest.json" />
+    <link rel="icon" type="image/svg+xml" href="img/icono.svg" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="Memory LSC" />
+    <title>Memory Educativo LSC</title>
+    <link rel="stylesheet" href="css/estilos.css" />
+  </head>
+
+  <body>
+    <a class="enlace-salto" href="#tablero">Saltar al tablero de juego</a>
+
+    <header class="cabecera" role="banner">
+      <h1 class="titulo">🧠 Memory Educativo LSC</h1>
+      <div class="marcador" aria-live="polite">
+        <p class="marcador__item">
+          Parejas:
+          <span id="contador-parejas" class="marcador__valor">0</span> / 6
+        </p>
+        <p class="marcador__item">
+          Movimientos:
+          <span id="contador-movimientos" class="marcador__valor">0</span>
+        </p>
+      </div>
+    </header>
+
+    <main class="contenido" role="main">
+      <!-- las cartas se generan en juego.js -->
+      <section
+        id="tablero"
+        class="tablero"
+        role="grid"
+        aria-label="Tablero de cartas del juego de memoria"
+        tabindex="-1"
+      ></section>
+
+      <section
+        id="pantalla-felicitacion"
+        class="felicitacion oculto"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="titulo-felicitacion"
+        aria-describedby="texto-felicitacion"
+      >
+        <div class="felicitacion__caja">
+          <h2 id="titulo-felicitacion" class="felicitacion__titulo">
+            🎉 ¡Muy bien! 🎉
+          </h2>
+          <p id="texto-felicitacion" class="felicitacion__texto">
+            ¡Encontraste todas las parejas!
+          </p>
+          <p class="felicitacion__resumen">
+            Lo lograste en
+            <span id="resumen-movimientos" class="felicitacion__valor">0</span>
+            movimientos.
+          </p>
+          <button
+            id="btn-reiniciar"
+            class="boton boton--primario"
+            type="button"
+          >
+            🔄 Jugar nuevamente
+          </button>
+        </div>
+      </section>
+    </main>
+
+    <footer class="pie" role="contentinfo">
+      <button id="btn-descargar" class="boton boton--secundario" type="button">
+        ⬇️ Descargar para jugar sin conexión
+      </button>
+      <p id="estado-descarga" class="pie__estado" aria-live="polite"></p>
+      <p class="pie__creditos">
+        Juego educativo en Lengua de Señas Colombiana (LSC)
+      </p>
+    </footer>
+
+    <!-- modal video LSC -->
+    <div
+      id="modal-video"
+      class="modal oculto"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="modal-titulo"
+    >
+      <div class="modal__fondo" data-cerrar-modal></div>
+      <div class="modal__caja" role="document">
+        <h2 id="modal-titulo" class="modal__titulo">Seña en LSC</h2>
+        <button
+          id="btn-cerrar-modal"
+          class="modal__cerrar"
+          type="button"
+          aria-label="Cerrar ventana de video"
+          data-cerrar-modal
+        >
+          ✖
+        </button>
+        <video
+          id="video-lsc"
+          class="modal__video"
+          controls
+          playsinline
+          preload="metadata"
+        >
+          Tu navegador no admite la reproducción de video.
+        </video>
+      </div>
+    </div>
+
+    <audio id="audio-palabra" preload="none"></audio>
+    <audio id="audio-frase" preload="none"></audio>
+
+    <div
+      id="anuncio-accesible"
+      class="visualmente-oculto"
+      aria-live="assertive"
+      role="status"
+    ></div>
+
+    <script type="module" src="js/juego.js"></script>
+  </body>
+</html>

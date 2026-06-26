@@ -40,7 +40,7 @@ const PAREJAS_INFO = {
 const RUTA_IMG = "img/";
 const RUTA_AUDIO = "audio/";
 const RUTA_VIDEO = "lsc/";
-const DORSO = RUTA_IMG + "dorso.svg";
+const DORSO = RUTA_IMG + "dorso_carta.png";
 const TOTAL = 6;
 
 // estado de la partida

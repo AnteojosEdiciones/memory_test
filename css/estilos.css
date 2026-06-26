@@ -1,0 +1,429 @@
+:root {
+  --color-primario: #76bd9f;
+  --color-primario-oscuro: #84b8a6;
+  --color-secundario: #fcce8f;
+  --color-exito: #8fcac4;
+  --color-fondo: white-space;
+  --color-carta-frente: #ffffff;
+  --color-carta-dorso: #abcebe;
+  --color-texto: #1a1a2e;
+  --color-texto-claro: #ffffff;
+
+  --fuente-base: "Segoe UI", "Trebuchet MS", Verdana, sans-serif;
+
+  --radio-borde: 1rem;
+  --sombra-carta: 0 0.25rem 0.6rem rgba(0, 0, 0, 0.2);
+  --sombra-fuerte: 0 0.5rem 1.25rem rgba(0, 0, 0, 0.3);
+  --duracion-volteo: 0.5s;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 100%;
+}
+
+body {
+  font-family: var(--fuente-base);
+  color: var(--color-texto);
+  background-color: var(--color-fondo);
+  line-height: 1.5;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* oculta visualmente pero sigue leyendose por lector de pantalla */
+.visualmente-oculto {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* link saltar al contenido, solo se ve al hacer focus */
+.enlace-salto {
+  position: absolute;
+  left: -999px;
+  top: 0;
+  z-index: 1000;
+  padding: 0.75rem 1rem;
+  background-color: var(--color-primario);
+  color: var(--color-texto-claro);
+  text-decoration: none;
+  border-radius: 0 0 var(--radio-borde) 0;
+}
+.enlace-salto:focus {
+  left: 0;
+}
+
+:focus-visible {
+  outline: 0.2rem solid var(--color-secundario);
+  outline-offset: 0.2rem;
+}
+
+.oculto {
+  display: none !important;
+}
+
+/* ---- cabecera ---- */
+.cabecera {
+  background-color: var(--color-primario);
+  color: var(--color-texto-claro);
+  padding: 1rem;
+  text-align: center;
+  box-shadow: var(--sombra-carta);
+}
+
+.titulo {
+  font-size: 1.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.marcador {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  font-size: 1.1rem;
+}
+
+.marcador__valor {
+  font-weight: bold;
+  color: var(--color-secundario);
+}
+
+/* ---- tablero ---- */
+.contenido {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+}
+
+.tablero {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* mobile: 2 col */
+  gap: 1rem;
+  width: 100%;
+  max-width: 56rem;
+}
+
+.carta {
+  aspect-ratio: 1 / 1;
+  perspective: 60rem;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  padding: 0;
+  display: grid; /* asi el interior estira a toda la carta */
+}
+
+.carta__interior {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform var(--duracion-volteo);
+  transform-style: preserve-3d;
+}
+
+.carta.volteada .carta__interior {
+  transform: rotateY(180deg);
+}
+
+.carta__cara {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  backface-visibility: hidden;
+  border-radius: var(--radio-borde);
+  box-shadow: var(--sombra-carta);
+  overflow: hidden;
+}
+
+.carta__cara--dorso {
+  background-color: var(--color-carta-dorso);
+  padding: 12%;
+}
+.carta__cara--dorso img {
+  width: 70%;
+  height: 70%;
+  object-fit: contain;
+}
+
+.carta__cara--frente {
+  background-color: var(--color-carta-frente);
+  transform: rotateY(180deg);
+  padding: 8%;
+  gap: 0.5rem;
+}
+.carta__cara--frente img {
+  width: 60%;
+  height: 60%;
+  object-fit: contain;
+}
+
+.carta__palabra {
+  font-size: 1.1rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  text-align: center;
+  color: var(--color-texto);
+  letter-spacing: 0.05em;
+}
+
+.carta.emparejada .carta__cara--frente {
+  outline: 0.2rem solid var(--color-exito);
+}
+.carta.emparejada {
+  cursor: default;
+}
+
+/* frases que se van descubriendo (las arma el js) */
+.frases {
+  width: 100%;
+  max-width: 56rem;
+  margin-top: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.frase {
+  background-color: var(--color-carta-frente);
+  border-radius: var(--radio-borde);
+  box-shadow: var(--sombra-carta);
+  padding: 1rem;
+  border-left: 0.35rem solid var(--color-exito);
+  animation: aparecer 0.3s ease;
+}
+
+.frase__texto {
+  font-size: 1.15rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.frase__botones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+/* ---- botones ---- */
+.boton {
+  font-family: inherit;
+  font-size: 1.1rem;
+  font-weight: bold;
+  min-height: 2.75rem; /* ~44px area tactil */
+  min-width: 2.75rem;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: var(--radio-borde);
+  cursor: pointer;
+  transition:
+    background-color 0.2s,
+    transform 0.1s;
+}
+.boton:active {
+  transform: scale(0.97);
+}
+
+.boton--primario {
+  background-color: var(--color-primario);
+  color: var(--color-texto-claro);
+}
+.boton--primario:hover {
+  background-color: var(--color-primario-oscuro);
+}
+
+.boton--secundario {
+  background-color: var(--color-secundario);
+  color: var(--color-texto);
+}
+.boton--secundario:hover {
+  filter: brightness(0.95);
+}
+
+.boton--lsc {
+  background-color: var(--color-exito);
+  color: var(--color-texto);
+  font-size: 1rem;
+  margin: 0.25rem;
+}
+.boton--lsc:hover {
+  filter: brightness(0.95);
+}
+
+/* ---- felicitacion ---- */
+.felicitacion {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+  padding: 1.5rem;
+}
+
+.felicitacion__caja {
+  background-color: var(--color-carta-frente);
+  border-radius: var(--radio-borde);
+  box-shadow: var(--sombra-fuerte);
+  padding: 2rem;
+  text-align: center;
+  max-width: 26rem;
+  width: 100%;
+  animation: aparecer 0.4s ease;
+}
+
+.felicitacion__titulo {
+  font-size: 2rem;
+  color: var(--color-primario);
+  margin-bottom: 1rem;
+}
+.felicitacion__texto {
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+}
+.felicitacion__resumen {
+  font-size: 1.1rem;
+  margin-bottom: 1.5rem;
+}
+.felicitacion__valor {
+  font-weight: bold;
+  color: var(--color-secundario);
+}
+
+/* ---- modal video ---- */
+.modal {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 300;
+  padding: 1.5rem;
+}
+
+.modal__fondo {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+.modal__caja {
+  position: relative;
+  z-index: 1;
+  background-color: var(--color-carta-frente);
+  border-radius: var(--radio-borde);
+  box-shadow: var(--sombra-fuerte);
+  padding: 1.5rem;
+  max-width: 40rem;
+  width: 100%;
+  animation: aparecer 0.3s ease;
+}
+
+.modal__titulo {
+  font-size: 1.5rem;
+  color: var(--color-primario);
+  margin-bottom: 1rem;
+  padding-right: 2.5rem;
+}
+
+.modal__cerrar {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  width: 2.75rem;
+  height: 2.75rem;
+  font-size: 1.25rem;
+  border: none;
+  border-radius: 50%;
+  background-color: var(--color-fondo);
+  color: var(--color-texto);
+  cursor: pointer;
+}
+.modal__cerrar:hover {
+  background-color: #d6e4ff;
+}
+
+.modal__video {
+  width: 100%;
+  border-radius: var(--radio-borde);
+  background-color: #000;
+}
+
+/* ---- pie ---- */
+.pie {
+  text-align: center;
+  padding: 1.25rem;
+  background-color: #dce9ff;
+}
+.pie__estado {
+  margin-top: 0.5rem;
+  font-size: 0.95rem;
+  color: var(--color-primario-oscuro);
+  min-height: 1.25rem;
+}
+.pie__creditos {
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+  color: var(--color-texto);
+}
+
+@keyframes aparecer {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* responsive: tablet 4 col, desktop 3 col */
+@media (min-width: 37.5em) {
+  .tablero {
+    grid-template-columns: repeat(4, 1fr);
+    max-width: 44rem;
+  }
+  .titulo {
+    font-size: 2rem;
+  }
+}
+
+@media (min-width: 62em) {
+  .tablero {
+    grid-template-columns: repeat(3, 1fr);
+    max-width: 36rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

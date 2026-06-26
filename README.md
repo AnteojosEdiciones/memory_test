@@ -7,7 +7,7 @@ Hecho con HTML, CSS y JS, sin frameworks.
 
 12 cartas boca abajo (6 parejas). Tocás una, se da vuelta y suena la palabra.
 Si las dos cartas son pareja aparece una frase y los botones para ver el video
-en señas de cada palabra. Si no, se vuelven a tapar al toque. Cuando juntás las
+en señas de cada palabra. Si no, se vuelven a tapar. Cuando juntás las
 6 parejas sale la pantalla de felicitación.
 
 ### Parejas

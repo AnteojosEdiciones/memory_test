@@ -1,7 +1,7 @@
 :root {
   --color-primario: #76bd9f;
   --color-primario-oscuro: #84b8a6;
-  --color-secundario: #fcce8f;
+  --color-secundario: #ceaff1;
   --color-exito: #8fcac4;
   --color-fondo: white-space;
   --color-carta-frente: #ffffff;
@@ -118,11 +118,11 @@ body {
   grid-template-columns: repeat(2, 1fr); /* mobile: 2 col */
   gap: 1rem;
   width: 100%;
-  max-width: 56rem;
+  max-width: 75rem;
 }
 
 .carta {
-  aspect-ratio: 1 / 1;
+  aspect-ratio: 3 / 4; /* rectangular vertical */
   perspective: 60rem;
   cursor: pointer;
   border: none;
@@ -160,11 +160,11 @@ body {
 
 .carta__cara--dorso {
   background-color: var(--color-carta-dorso);
-  padding: 12%;
+  padding: 4%;
 }
 .carta__cara--dorso img {
-  width: 70%;
-  height: 70%;
+  width: 92%;
+  height: 92%;
   object-fit: contain;
 }
 
@@ -401,11 +401,11 @@ body {
   }
 }
 
-/* responsive: tablet 4 col, desktop 3 col */
+/* responsive: tablet 3 col, desktop 6 col en una sola fila */
 @media (min-width: 37.5em) {
   .tablero {
-    grid-template-columns: repeat(4, 1fr);
-    max-width: 44rem;
+    grid-template-columns: repeat(3, 1fr);
+    max-width: 48rem;
   }
   .titulo {
     font-size: 2rem;
@@ -414,8 +414,8 @@ body {
 
 @media (min-width: 62em) {
   .tablero {
-    grid-template-columns: repeat(3, 1fr);
-    max-width: 36rem;
+    grid-template-columns: repeat(6, 1fr);
+    max-width: 75rem;
   }
 }
 

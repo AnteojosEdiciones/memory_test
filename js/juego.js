@@ -86,6 +86,56 @@ function play(el, ruta) {
   if (p) p.catch(() => {}); // todavia no estan los mp3
 }
 
+// ---- efectos de sonido generados con Web Audio (sin archivos) ----
+let audioCtx = null;
+const sinSonido =
+  typeof window.matchMedia === "function" &&
+  window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+function ctxAudio() {
+  if (sinSonido) return null;
+  if (!audioCtx) {
+    const AC = window.AudioContext || window.webkitAudioContext;
+    if (!AC) return null;
+    audioCtx = new AC();
+  }
+  if (audioCtx.state === "suspended") audioCtx.resume();
+  return audioCtx;
+}
+
+// reproduce un tono simple (frecuencia en Hz, duracion en s)
+function tono(freq, inicio, dur, tipo = "sine", volumen = 0.18) {
+  const ctx = ctxAudio();
+  if (!ctx) return;
+  const t0 = ctx.currentTime + inicio;
+  const osc = ctx.createOscillator();
+  const gain = ctx.createGain();
+  osc.type = tipo;
+  osc.frequency.value = freq;
+  gain.gain.setValueAtTime(0, t0);
+  gain.gain.linearRampToValueAtTime(volumen, t0 + 0.01);
+  gain.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
+  osc.connect(gain).connect(ctx.destination);
+  osc.start(t0);
+  osc.stop(t0 + dur);
+}
+
+function sonidoVoltear() {
+  tono(420, 0, 0.12, "triangle");
+}
+
+function sonidoAcierto() {
+  // dos notas ascendentes alegres
+  tono(523.25, 0, 0.15, "sine"); // do
+  tono(783.99, 0.13, 0.22, "sine"); // sol
+}
+
+function sonidoVictoria() {
+  // arpegio do - mi - sol - do agudo
+  const notas = [523.25, 659.25, 783.99, 1046.5];
+  notas.forEach((f, i) => tono(f, i * 0.18, 0.3, "triangle", 0.2));
+}
+
 function anunciar(txt) {
   dom.anuncioAccesible.textContent = txt;
 }
@@ -156,6 +206,7 @@ function alVoltear(carta) {
 function voltear(carta) {
   carta.classList.add("volteada");
   carta.setAttribute("aria-label", "Carta " + carta.dataset.palabra + ".");
+  sonidoVoltear();
   play(dom.audioPalabra, RUTA_AUDIO + carta.dataset.id + ".mp3");
 }
 
@@ -179,6 +230,7 @@ function acierto() {
   estado.parejas++;
   dom.contadorParejas.textContent = String(estado.parejas);
 
+  sonidoAcierto();
   play(dom.audioFrase, info.audio);
   anunciar("¡Pareja encontrada! " + info.frase);
   mostrarFrase(estado.primera, estado.segunda, info.frase);
@@ -217,6 +269,9 @@ function mostrarFrase(c1, c2, frase) {
     cont.setAttribute("aria-label", "Frases descubiertas");
     dom.tablero.insertAdjacentElement("afterend", cont);
   }
+
+  // solo se muestra el cartel del ultimo par encontrado
+  cont.innerHTML = "";
 
   const tarjeta = document.createElement("div");
   tarjeta.className = "frase";
@@ -269,6 +324,7 @@ function cerrarModal() {
 function mostrarFelicitacion() {
   dom.resumenMovimientos.textContent = String(estado.movs);
   dom.pantallaFelicitacion.classList.remove("oculto");
+  sonidoVictoria();
   anunciar(
     "¡Felicidades! Completaste el juego en " + estado.movs + " movimientos.",
   );

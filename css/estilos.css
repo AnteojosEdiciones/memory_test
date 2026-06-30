@@ -171,17 +171,17 @@ body {
 .carta__cara--frente {
   background-color: var(--color-carta-frente);
   transform: rotateY(180deg);
-  padding: 8%;
-  gap: 0.5rem;
+  padding: 4%;
+  gap: 0.15rem;
 }
 .carta__cara--frente img {
-  width: 60%;
-  height: 60%;
+  width: 85%;
+  height: 85%;
   object-fit: contain;
 }
 
 .carta__palabra {
-  font-size: 1.1rem;
+  font-size: 1.4rem;
   font-weight: bold;
   text-transform: uppercase;
   text-align: center;

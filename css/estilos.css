@@ -8,6 +8,7 @@
   --color-carta-dorso: #abcebe;
   --color-texto: #1a1a2e;
   --color-texto-claro: #ffffff;
+  --color-numeros-secundario: #215543;
 
   --fuente-base: "Segoe UI", "Trebuchet MS", Verdana, sans-serif;
 
@@ -100,7 +101,7 @@ body {
 
 .marcador__valor {
   font-weight: bold;
-  color: var(--color-secundario);
+  color: var(--color-numeros-secundario);
 }
 
 /* ---- tablero ---- */

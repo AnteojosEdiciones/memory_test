@@ -321,10 +321,48 @@ function cerrarModal() {
   if (focoPrevio && focoPrevio.focus) focoPrevio.focus();
 }
 
+// confeti de colores que cae y desaparece solo a los pocos segundos
+function lanzarConfeti() {
+  if (sinSonido) return; // respeta reduce-motion (silencia tambien la animacion intensa)
+
+  const colores = [
+    "#76bd9f",
+    "#fcce8f",
+    "#8fcac4",
+    "#ceaff1",
+    "#abcebe",
+    "#f78da7",
+  ];
+  const cont = document.createElement("div");
+  cont.className = "confeti";
+  cont.setAttribute("aria-hidden", "true");
+
+  const cantidad = 120;
+  let maxDur = 0;
+  for (let i = 0; i < cantidad; i++) {
+    const pieza = document.createElement("span");
+    pieza.className = "confeti__pieza";
+    pieza.style.left = Math.random() * 100 + "vw";
+    pieza.style.backgroundColor =
+      colores[Math.floor(Math.random() * colores.length)];
+    pieza.style.borderRadius = Math.random() < 0.5 ? "50%" : "0";
+    const dur = 2 + Math.random() * 1.5; // 2 - 3.5 s
+    const retraso = Math.random() * 0.8;
+    pieza.style.animationDuration = dur + "s";
+    pieza.style.animationDelay = retraso + "s";
+    maxDur = Math.max(maxDur, dur + retraso);
+    cont.appendChild(pieza);
+  }
+
+  document.body.appendChild(cont);
+  setTimeout(() => cont.remove(), maxDur * 1000 + 200);
+}
+
 function mostrarFelicitacion() {
   dom.resumenMovimientos.textContent = String(estado.movs);
   dom.pantallaFelicitacion.classList.remove("oculto");
   sonidoVictoria();
+  lanzarConfeti();
   anunciar(
     "¡Felicidades! Completaste el juego en " + estado.movs + " movimientos.",
   );

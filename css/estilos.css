@@ -402,6 +402,35 @@ body {
   }
 }
 
+/* ---- confeti de victoria (lo arma el js) ---- */
+.confeti {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 250;
+}
+
+.confeti__pieza {
+  position: absolute;
+  top: -5vh;
+  width: 0.7rem;
+  height: 1rem;
+  opacity: 0;
+  animation: caer-confeti linear forwards;
+}
+
+@keyframes caer-confeti {
+  0% {
+    transform: translateY(-10vh) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(110vh) rotate(720deg);
+    opacity: 1;
+  }
+}
+
 /* responsive: tablet 3 col, desktop 6 col en una sola fila */
 @media (min-width: 37.5em) {
   .tablero {

@@ -1,0 +1,421 @@
+/* ============================================================
+   Panel de Accesibilidad — Anteojos Ediciones
+   Cumple WCAG 2.2 AA · Responsive · Español
+   ============================================================ */
+
+/* ---------- Variables del panel ---------- */
+:root {
+  --ap-primary: #0a6b63;
+  --ap-primary-dark: #064f49;
+  --ap-accent: #f4cb64;
+  --ap-bg: #ffffff;
+  --ap-text: #1f1f1f;
+  --ap-radius: 12px;
+  --ap-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
+  --ap-transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ---------- Botón flotante ---------- */
+#ap-toggle-btn {
+  position: fixed;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 999999;
+  width: 72px;
+  height: 72px;
+  border: none;
+  border-radius: 12px 0 0 12px;
+  background: var(--ap-primary);
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: -2px 2px 12px rgba(0, 0, 0, 0.25);
+  transition:
+    background var(--ap-transition),
+    transform var(--ap-transition);
+  padding: 0;
+}
+#ap-toggle-btn:hover,
+#ap-toggle-btn:focus-visible {
+  background: var(--ap-primary-dark);
+  outline: 3px solid var(--ap-accent);
+  outline-offset: 2px;
+}
+#ap-toggle-btn svg {
+  width: 30px;
+  height: 30px;
+  fill: currentColor;
+  pointer-events: none;
+}
+
+/* ---------- Overlay ---------- */
+#ap-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 999998;
+  opacity: 0;
+  transition: opacity var(--ap-transition);
+}
+#ap-overlay.ap-visible {
+  display: block;
+  opacity: 1;
+}
+
+/* ---------- Panel contenedor ---------- */
+#ap-panel {
+  position: fixed;
+  right: -420px;
+  top: 0;
+  width: 400px;
+  max-width: 95vw;
+  height: 100vh;
+  height: 100dvh;
+  z-index: 999999;
+  background: var(--ap-bg);
+  box-shadow: var(--ap-shadow);
+  transition: right var(--ap-transition);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  font-family: "Raleway", system-ui, sans-serif;
+  color: var(--ap-text);
+}
+#ap-panel.ap-open {
+  right: 0;
+}
+
+/* ---------- Cabecera ---------- */
+.ap-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  background: var(--ap-primary);
+  color: #fff;
+  flex-shrink: 0;
+}
+.ap-header h2 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.ap-header h2 svg {
+  width: 24px;
+  height: 24px;
+  fill: currentColor;
+}
+.ap-header-actions {
+  display: flex;
+  gap: 8px;
+}
+.ap-header-actions button {
+  background: rgba(255, 255, 255, 0.15);
+  border: 2px solid transparent;
+  border-radius: 8px;
+  color: #fff;
+  padding: 6px 12px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background var(--ap-transition);
+  font-family: inherit;
+}
+.ap-header-actions button:hover,
+.ap-header-actions button:focus-visible {
+  background: rgba(255, 255, 255, 0.3);
+  outline: 2px solid var(--ap-accent);
+  outline-offset: 1px;
+}
+
+/* ---------- Cuerpo scrollable ---------- */
+.ap-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px 20px 24px;
+  scroll-behavior: smooth;
+}
+.ap-body::-webkit-scrollbar {
+  width: 6px;
+}
+.ap-body::-webkit-scrollbar-thumb {
+  background: var(--ap-primary);
+  border-radius: 3px;
+}
+
+/* ---------- Secciones / grupos ---------- */
+.ap-section {
+  margin-bottom: 18px;
+}
+.ap-section-title {
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--ap-primary);
+  margin-bottom: 10px;
+  padding-bottom: 4px;
+  border-bottom: 2px solid var(--ap-primary);
+}
+
+/* ---------- Botones de opción ---------- */
+.ap-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.ap-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background: #f0f7f6;
+  border: 2px solid transparent;
+  border-radius: var(--ap-radius);
+  padding: 14px 8px;
+  cursor: pointer;
+  transition: all var(--ap-transition);
+  text-align: center;
+  font-family: inherit;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--ap-text);
+  min-height: 80px;
+}
+.ap-btn svg {
+  width: 26px;
+  height: 26px;
+  fill: var(--ap-primary);
+  flex-shrink: 0;
+  transition: fill var(--ap-transition);
+}
+.ap-btn:hover {
+  background: #ddf0ee;
+  border-color: var(--ap-primary);
+}
+.ap-btn:focus-visible {
+  outline: 3px solid var(--ap-accent);
+  outline-offset: 2px;
+}
+.ap-btn.ap-active {
+  background: var(--ap-primary);
+  color: #fff;
+  border-color: var(--ap-primary-dark);
+}
+.ap-btn.ap-active svg {
+  fill: #fff;
+}
+
+/* ---------- Slider/rango ---------- */
+.ap-slider-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+.ap-slider-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+.ap-slider-label .ap-val {
+  color: var(--ap-primary);
+  font-weight: 700;
+}
+.ap-slider-group input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 8px;
+  border-radius: 4px;
+  background: #ddf0ee;
+  outline: none;
+}
+.ap-slider-group input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--ap-primary);
+  cursor: pointer;
+  border: 3px solid #fff;
+  box-shadow: 0 0 0 2px var(--ap-primary);
+}
+.ap-slider-group input[type="range"]::-moz-range-thumb {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--ap-primary);
+  cursor: pointer;
+  border: 3px solid #fff;
+  box-shadow: 0 0 0 2px var(--ap-primary);
+}
+.ap-slider-group input[type="range"]:focus-visible {
+  outline: 3px solid var(--ap-accent);
+  outline-offset: 2px;
+}
+
+/* ---------- Incremento/decremento tamaño ---------- */
+.ap-stepper {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  justify-content: center;
+  margin-bottom: 12px;
+}
+.ap-stepper button {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 2px solid var(--ap-primary);
+  background: #f0f7f6;
+  color: var(--ap-primary);
+  font-size: 1.3rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--ap-transition);
+  font-family: inherit;
+}
+.ap-stepper button:hover {
+  background: var(--ap-primary);
+  color: #fff;
+}
+.ap-stepper button:focus-visible {
+  outline: 3px solid var(--ap-accent);
+  outline-offset: 2px;
+}
+.ap-stepper .ap-size-val {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--ap-primary);
+  min-width: 50px;
+  text-align: center;
+}
+
+/* ============================================================
+   Clases globales que aplica el panel al <html>
+   ============================================================ */
+
+/* -- Contraste alto -- */
+html.ap-high-contrast {
+  filter: contrast(1.45) !important;
+}
+
+/* -- Modo oscuro -- */
+html.ap-dark-mode {
+  filter: invert(1) hue-rotate(180deg) !important;
+}
+html.ap-dark-mode img,
+html.ap-dark-mode video,
+html.ap-dark-mode svg,
+html.ap-dark-mode [style*="background-image"],
+html.ap-dark-mode canvas {
+  filter: invert(1) hue-rotate(180deg) !important;
+}
+
+/* -- Filtro de luz azul -- */
+html.ap-blue-filter::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: rgba(255, 180, 50, 0.18);
+  z-index: 999990;
+  pointer-events: none;
+}
+
+/* -- Resaltado de enlaces -- */
+html.ap-highlight-links a {
+  outline: 3px solid #f4cb64 !important;
+  outline-offset: 2px !important;
+  text-decoration: underline !important;
+  background: rgba(244, 203, 100, 0.15) !important;
+}
+
+/* -- Cursor grande -- */
+html.ap-big-cursor,
+html.ap-big-cursor * {
+  cursor:
+    url("data:image/svg+xml,%3Csvg xmlns='https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Cursor-design1-arrow.svg/960px-Cursor-design1-arrow.svg.png' width='48' height='48' viewBox='0 0 24 24'%3E%3Cpath fill='%23000' stroke='%23fff' stroke-width='1' d='M5 3l14 8-6 1.5L10 19z'/%3E%3C/svg%3E")
+      4 2,
+    auto !important;
+}
+
+/* -- Pausa de animaciones -- */
+html.ap-pause-animations *,
+html.ap-pause-animations *::before,
+html.ap-pause-animations *::after {
+  animation-play-state: paused !important;
+  transition-duration: 0s !important;
+  scroll-behavior: auto !important;
+}
+
+/* -- Ocultar imágenes -- */
+html.ap-hide-images img,
+html.ap-hide-images svg:not(#ap-panel svg):not(#ap-toggle-btn svg),
+html.ap-hide-images [style*="background-image"],
+html.ap-hide-images video {
+  visibility: hidden !important;
+}
+
+/* -- Correcciones de daltonismo (filtros SVG se aplican vía JS) -- */
+html.ap-protanopia {
+  filter: url(accessibility-panel.css) !important;
+}
+html.ap-deuteranopia {
+  filter: url(accessibility-panel.css) !important;
+}
+html.ap-tritanopia {
+  filter: url(accessibility-panel.css) !important;
+}
+html.ap-grayscale {
+  filter: grayscale(1) !important;
+}
+
+/* -- Lector de pantalla simplificado highlight -- */
+.ap-sr-highlight {
+  outline: 3px dashed var(--ap-primary) !important;
+  outline-offset: 2px !important;
+  background: rgba(10, 107, 99, 0.08) !important;
+}
+
+/* ============================================================
+   Responsive
+   ============================================================ */
+@media (max-width: 1020px) {
+  #ap-panel {
+    width: 100vw;
+    right: -100vw;
+  }
+  #ap-panel.ap-open {
+    right: 0;
+  }
+  #ap-toggle-btn {
+    width: 52px;
+    height: 52px;
+  }
+  #ap-toggle-btn svg {
+    width: 24px;
+    height: 24px;
+  }
+  .ap-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+  .ap-btn {
+    padding: 10px 6px;
+    min-height: 68px;
+    font-size: 0.72rem;
+  }
+}

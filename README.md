@@ -5,7 +5,7 @@ Hecho con HTML, CSS y JS, sin frameworks.
 
 ## Cómo se juega
 
-12 cartas boca abajo (6 parejas). Tocás una, se da vuelta y suena la palabra.
+12 cartas boca abajo (6 parejas). El jugador toca una carta, se da vuelta y se escucha un audio que reproduce lo que es.
 Si las dos cartas son pareja aparece una frase y los botones para ver el video
 en señas de cada palabra. Si no, se vuelven a tapar. Cuando juntás las
 6 parejas sale la pantalla de felicitación.
@@ -22,12 +22,15 @@ en señas de cada palabra. Si no, se vuelven a tapar. Cuando juntás las
 ## Estructura
 
 ```
-index.html         estructura
-css/estilos.css    estilos + animaciones
-js/juego.js        logica
-manifest.json      pwa
-service-worker.js  cache offline
-img/ audio/ lsc/   assets (faltan todavia)
+index.html              estructura
+css/estilos.css         estilos + animaciones
+js/juego.js             logica
+manifest.json           pwa
+service-worker.js       cache offline
+img/ audio/ lsc/        assets (faltan todavia)
+icons                   iconos de Anteojos Ediciones para todos los dispositivos
+panel_accesibilidad     panel para personas con alteraciones visuales como
+                        protanomalía, deutanomalía, tritanomalía
 ```
 
 ## Correrlo

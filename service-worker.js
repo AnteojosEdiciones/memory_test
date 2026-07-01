@@ -1,7 +1,7 @@
 // sw para jugar offline. cachea todo y responde cache-first.
 // OJO: tiene que estar en la raiz para controlar todas las rutas
 
-const CACHE = "memory-lsc-v1";
+const CACHE = "memory-lsc-v2";
 
 const APP = [
   "./",

@@ -1,9 +1,7 @@
-/* ============================================================
-   Panel de Accesibilidad — Anteojos Ediciones
-   Cumple WCAG 2.2 AA · Responsive · Español
-   ============================================================ */
+/* estilos del panel de accesibilidad.
+   uso prefijo ap- en todo para no pisar los estilos del juego */
 
-/* ---------- Variables del panel ---------- */
+/* variables, mismo verde/amarillo que usa Anteojos */
 :root {
   --ap-primary: #0a6b63;
   --ap-primary-dark: #064f49;
@@ -15,7 +13,7 @@
   --ap-transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* ---------- Botón flotante ---------- */
+/* boton flotante que abre el panel */
 #ap-toggle-btn {
   position: fixed;
   right: 0;
@@ -51,7 +49,7 @@
   pointer-events: none;
 }
 
-/* ---------- Overlay ---------- */
+/* fondo oscuro de atras */
 #ap-overlay {
   display: none;
   position: fixed;
@@ -66,7 +64,7 @@
   opacity: 1;
 }
 
-/* ---------- Panel contenedor ---------- */
+/* el panel, entra deslizando desde la derecha */
 #ap-panel {
   position: fixed;
   right: -420px;
@@ -89,7 +87,7 @@
   right: 0;
 }
 
-/* ---------- Cabecera ---------- */
+/* cabecera con el titulo y los botones reset/cerrar */
 .ap-header {
   display: flex;
   align-items: center;
@@ -135,7 +133,7 @@
   outline-offset: 1px;
 }
 
-/* ---------- Cuerpo scrollable ---------- */
+/* el cuerpo, si hay mucho scrollea */
 .ap-body {
   flex: 1;
   overflow-y: auto;
@@ -150,7 +148,7 @@
   border-radius: 3px;
 }
 
-/* ---------- Secciones / grupos ---------- */
+/* cada grupo de opciones */
 .ap-section {
   margin-bottom: 18px;
 }
@@ -165,7 +163,7 @@
   border-bottom: 2px solid var(--ap-primary);
 }
 
-/* ---------- Botones de opción ---------- */
+/* los botones de opcion, van de a 2 por fila */
 .ap-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -214,185 +212,22 @@
   fill: #fff;
 }
 
-/* ---------- Slider/rango ---------- */
-.ap-slider-group {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  margin-bottom: 12px;
-}
-.ap-slider-label {
-  display: flex;
-  justify-content: space-between;
-  font-size: 0.8rem;
-  font-weight: 600;
-}
-.ap-slider-label .ap-val {
-  color: var(--ap-primary);
-  font-weight: 700;
-}
-.ap-slider-group input[type="range"] {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 100%;
-  height: 8px;
-  border-radius: 4px;
-  background: #ddf0ee;
-  outline: none;
-}
-.ap-slider-group input[type="range"]::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  width: 22px;
-  height: 22px;
-  border-radius: 50%;
-  background: var(--ap-primary);
-  cursor: pointer;
-  border: 3px solid #fff;
-  box-shadow: 0 0 0 2px var(--ap-primary);
-}
-.ap-slider-group input[type="range"]::-moz-range-thumb {
-  width: 22px;
-  height: 22px;
-  border-radius: 50%;
-  background: var(--ap-primary);
-  cursor: pointer;
-  border: 3px solid #fff;
-  box-shadow: 0 0 0 2px var(--ap-primary);
-}
-.ap-slider-group input[type="range"]:focus-visible {
-  outline: 3px solid var(--ap-accent);
-  outline-offset: 2px;
-}
-
-/* ---------- Incremento/decremento tamaño ---------- */
-.ap-stepper {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  justify-content: center;
-  margin-bottom: 12px;
-}
-.ap-stepper button {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  border: 2px solid var(--ap-primary);
-  background: #f0f7f6;
-  color: var(--ap-primary);
-  font-size: 1.3rem;
-  font-weight: 700;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all var(--ap-transition);
-  font-family: inherit;
-}
-.ap-stepper button:hover {
-  background: var(--ap-primary);
-  color: #fff;
-}
-.ap-stepper button:focus-visible {
-  outline: 3px solid var(--ap-accent);
-  outline-offset: 2px;
-}
-.ap-stepper .ap-size-val {
-  font-size: 1.1rem;
-  font-weight: 700;
-  color: var(--ap-primary);
-  min-width: 50px;
-  text-align: center;
-}
-
-/* ============================================================
-   Clases globales que aplica el panel al <html>
-   ============================================================ */
-
-/* -- Contraste alto -- */
-html.ap-high-contrast {
-  filter: contrast(1.45) !important;
-}
-
-/* -- Modo oscuro -- */
-html.ap-dark-mode {
-  filter: invert(1) hue-rotate(180deg) !important;
-}
-html.ap-dark-mode img,
-html.ap-dark-mode video,
-html.ap-dark-mode svg,
-html.ap-dark-mode [style*="background-image"],
-html.ap-dark-mode canvas {
-  filter: invert(1) hue-rotate(180deg) !important;
-}
-
-/* -- Filtro de luz azul -- */
-html.ap-blue-filter::after {
-  content: "";
-  position: fixed;
-  inset: 0;
-  background: rgba(255, 180, 50, 0.18);
-  z-index: 999990;
-  pointer-events: none;
-}
-
-/* -- Resaltado de enlaces -- */
-html.ap-highlight-links a {
-  outline: 3px solid #f4cb64 !important;
-  outline-offset: 2px !important;
-  text-decoration: underline !important;
-  background: rgba(244, 203, 100, 0.15) !important;
-}
-
-/* -- Cursor grande -- */
-html.ap-big-cursor,
-html.ap-big-cursor * {
-  cursor:
-    url("data:image/svg+xml,%3Csvg xmlns='https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Cursor-design1-arrow.svg/960px-Cursor-design1-arrow.svg.png' width='48' height='48' viewBox='0 0 24 24'%3E%3Cpath fill='%23000' stroke='%23fff' stroke-width='1' d='M5 3l14 8-6 1.5L10 19z'/%3E%3C/svg%3E")
-      4 2,
-    auto !important;
-}
-
-/* -- Pausa de animaciones -- */
-html.ap-pause-animations *,
-html.ap-pause-animations *::before,
-html.ap-pause-animations *::after {
-  animation-play-state: paused !important;
-  transition-duration: 0s !important;
-  scroll-behavior: auto !important;
-}
-
-/* -- Ocultar imágenes -- */
-html.ap-hide-images img,
-html.ap-hide-images svg:not(#ap-panel svg):not(#ap-toggle-btn svg),
-html.ap-hide-images [style*="background-image"],
-html.ap-hide-images video {
-  visibility: hidden !important;
-}
-
-/* -- Correcciones de daltonismo (filtros SVG se aplican vía JS) -- */
+/* clases que el panel le pone al <html> para corregir el color.
+   los filtros protanopia/etc estan definidos como svg (los mete el js) */
 html.ap-protanopia {
-  filter: url(accessibility-panel.css) !important;
+  filter: url(#ap-protanopia-filter) !important;
 }
 html.ap-deuteranopia {
-  filter: url(accessibility-panel.css) !important;
+  filter: url(#ap-deuteranopia-filter) !important;
 }
 html.ap-tritanopia {
-  filter: url(accessibility-panel.css) !important;
+  filter: url(#ap-tritanopia-filter) !important;
 }
 html.ap-grayscale {
   filter: grayscale(1) !important;
 }
 
-/* -- Lector de pantalla simplificado highlight -- */
-.ap-sr-highlight {
-  outline: 3px dashed var(--ap-primary) !important;
-  outline-offset: 2px !important;
-  background: rgba(10, 107, 99, 0.08) !important;
-}
-
-/* ============================================================
-   Responsive
-   ============================================================ */
+/* en celu/tablet el panel ocupa toda la pantalla */
 @media (max-width: 1020px) {
   #ap-panel {
     width: 100vw;
